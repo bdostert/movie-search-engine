@@ -1,0 +1,19 @@
+Movie Search Engine Spec.
+
+/scripts:
+  scraper.py -> scrapes wikipedia pages to obtain movie titles
+
+/data
+  MovieTitles.txt -> list of all movie titles filled by webscraper
+  
+/test
+  
+
+/src
+  CompareWords.cc
+  CompareWords.h
+  TerminalDisplay.cc
+  TerminalDisplay.h
+  main.cc 
+  
+  
