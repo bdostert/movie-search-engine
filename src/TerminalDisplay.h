@@ -12,12 +12,14 @@
 class TerminalDisplay {
   private:
     uint16_t height = 9, width = 50, pos = 0;
+    SearchEngine searchEngine;
     
 
   public:
-    TerminalDisplay(){}
+    TerminalDisplay(SearchEngine &_searchEngine)
+      :searchEngine(_searchEngine){}
 
-    void update(std::vector<std::string> &movieTitles);
+    void update();
 };
 
 #endif 

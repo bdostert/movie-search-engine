@@ -1,14 +1,14 @@
 #include "TerminalDisplay.h"
+#include "SearchEngine.h"
 
 
 int main(int argc, char *argv[]){
 //  std::ios_base::sync_with_stdio(0); std::cin.tie(0); std::cout.tie(0);
   
-  TerminalDisplay t;
+  SearchEngine searchEngine;
+  TerminalDisplay terminalDisplay(searchEngine);
 
-  std::vector<std::string> movieTitles; movieTitles.reserve(50000);
-
-  t.update(movieTitles); 
+  terminalDisplay.update(); 
 
   return 0;
 }
