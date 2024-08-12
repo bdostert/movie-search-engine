@@ -27,9 +27,11 @@ def main():
 
         for title in titles:
             movie_title = title.get_text();
+
             file.write(movie_title)
 
     file.close()
+    
 
 
 if __name__ == '__main__':

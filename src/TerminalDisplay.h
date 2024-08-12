@@ -11,7 +11,7 @@
 
 class TerminalDisplay {
   private:
-    uint16_t height = 9, width = 50, pos = 0;
+    uint8_t height = 9, width = 50, pos = 0;
     SearchEngine searchEngine;
     
 

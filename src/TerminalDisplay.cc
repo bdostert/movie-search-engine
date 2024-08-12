@@ -2,7 +2,7 @@
 
 void TerminalDisplay::update(){
 
-  char buf[9 * 50];
+  char buf[9 * 50], c;
   std::string line, query;
 
   std::memset(buf, ' ', height * width - 1);
@@ -13,42 +13,45 @@ void TerminalDisplay::update(){
   //setting border---------------------------------------
   pos = (height * width) - width + 1;
   std::memset(buf, '-', width - 1); //top line
-  std::memset(buf + pos - width, '-', width - 1); //second last line
+  std::memset(buf + (height * width) - (2 * width) + 1, '-', width - 1); //second last line
                                                   
   for(int i = 1; i < height; ++i){
     buf[width * i - 1] = '|';   
     buf[width * (i - 1)] = '|';   
   }
-  std::cout << "Search: ";
   //-----------------------------------------------------
 
     printf("\x1b[H");
     for(int i = 0; i < height * width; ++i){
       putchar(i % width ? buf[i] : 10);
     }
+  std::cout << "Search: ";
     
   printf("\x1b[2J");
 
   do{
-    std::getline(std::cin, line);
-    query += line;
-    char c = line.back();
-    //std::cin.get(c);
+    c = std::getchar();
+    //std::getline(std::cin, line);
+    if(c == 8 || c == 127){
+      if(!query.empty()){
+        query.pop_back();
+        std::cout << "\r" + std::string(width - 1, ' ');
+//        std::cout << "\rSearch: " << query;
+      }
+//      buf[pos] = ' ';
+      pos = std::max(3, pos - 1);
+    }
+    else{
+      query += c;
+      ++pos;
+    }
 
-    if(pos / height >= width - 1){
+    if(static_cast<uint8_t>(query.length()) >= width - 5){
       std::cout << "Too many input characters" << std::endl;
       exit(1);
     }
 
-    if(c == '\b'){
-      //buf[pos] = ' ';
-      pos = std::max(3, pos - 1);
-    }
-    //else
-      //buf[++pos] = c; 
-    
 
-   // std::string query(buf + (height * width) - width + 8, buf + pos);
     searchEngine.getMostSimilar(mostSimilar, query);
 //    std::cout << "QUERY = " << query << "\n";
         
@@ -66,7 +69,7 @@ void TerminalDisplay::update(){
       buf[width * (i + 1) + 4] = ' ';
 
                                                                           
-      for(uint8_t j = 0; j < mostSimilar[i].size(); ++j)
+      for(uint8_t j = 0; j < mostSimilar[i].size() && j < width - 1; ++j)
         buf[width * (i + 1) + 4 + j] = mostSimilar[i][j]; 
                                                                           
       //std::memcpy(buf[width * (i + 1) + 2], mostSimilar[i], mostSimilar[i].length()); 
@@ -80,6 +83,6 @@ void TerminalDisplay::update(){
     }
     std::cout << "\rSearch: " << query;
 
-  }while(line.back() != '~');
+  }while(c != '~');
     
 }

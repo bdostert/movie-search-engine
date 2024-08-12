@@ -1,5 +1,15 @@
 Movie Search Engine Spec.
 
+//TODO:
+  - Add multithreading to dynamic programming in search engine
+  - Add clear line / backspace / quit options with menu above search results
+  - Maybe split movie titles containing multiple years into seperate entities
+    -> perhaps make python script to do this + delete empty lines 
+  - Add selection feature to pick a search result. cout wiki/imdb url to
+      the selected movie.
+  
+
+
 /scripts:
   scraper.py -> scrapes wikipedia pages to obtain movie titles
 
@@ -7,11 +17,11 @@ Movie Search Engine Spec.
   MovieTitles.txt -> list of all movie titles filled by webscraper
   
 /test
-  
+  SearchEngine_basic.cc -> basic test with single query
 
 /src
-  CompareWords.cc
-  CompareWords.h
+  SearchEngine.cc
+  SearchEngine.h
   TerminalDisplay.cc
   TerminalDisplay.h
   main.cc 
