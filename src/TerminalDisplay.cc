@@ -8,6 +8,7 @@ void TerminalDisplay::update(){
   std::memset(buf, ' ', height * width - 1);
 
   std::vector<std::string> mostSimilar(height - 2);
+  printf("\x1b[2J");
 
 
   //setting border---------------------------------------
@@ -25,9 +26,7 @@ void TerminalDisplay::update(){
     for(int i = 0; i < height * width; ++i){
       putchar(i % width ? buf[i] : 10);
     }
-  std::cout << "Search: ";
-    
-  printf("\x1b[2J");
+    std::printf("\rSearch: ");
 
   do{
     c = std::getchar();
@@ -35,11 +34,16 @@ void TerminalDisplay::update(){
     if(c == 8 || c == 127){
       if(!query.empty()){
         query.pop_back();
-        std::cout << "\r" + std::string(width - 1, ' ');
-//        std::cout << "\rSearch: " << query;
+        std::printf("\r\n");
+        //std::cout << "\r\n";
+
+        if(query.empty()){
+          for(uint8_t i = 0; i < mostSimilar.size(); ++i)
+              mostSimilar[i] = "";
+        }
+
       }
-//      buf[pos] = ' ';
-      pos = std::max(3, pos - 1);
+      pos = std::max(8, pos - 1);
     }
     else{
       query += c;
@@ -47,20 +51,16 @@ void TerminalDisplay::update(){
     }
 
     if(static_cast<uint8_t>(query.length()) >= width - 5){
-      std::cout << "Too many input characters" << std::endl;
+      std::printf("\nToo many input characters\n");
+      //std::cout << "Too many input characters" << std::endl;
       exit(1);
     }
 
-
-    searchEngine.getMostSimilar(mostSimilar, query);
+    if(!query.empty())
+      searchEngine.getMostSimilar(mostSimilar, query);
 //    std::cout << "QUERY = " << query << "\n";
         
 
-    for(auto s : mostSimilar){
-    //    std::cout << s << "\n";
-        assert(!s.empty());
-    }
-    
     for(uint8_t i = 0; i < height - 3; ++i){
       std::memset(buf + width * (i + 1) + 4, ' ', width - 5); //clearing line
       
@@ -81,7 +81,8 @@ void TerminalDisplay::update(){
     for(int i = 0; i < height * width; ++i){
       putchar(i % width ? buf[i] : 10);
     }
-    std::cout << "\rSearch: " << query;
+    std::printf("\rSearch: %s", query.c_str());
+    //std::cout << "\rSearch: " << query;
 
   }while(c != '~');
     

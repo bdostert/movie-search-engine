@@ -3,8 +3,6 @@ Movie Search Engine Spec.
 //TODO:
   - Add multithreading to dynamic programming in search engine
   - Add clear line / backspace / quit options with menu above search results
-  - Maybe split movie titles containing multiple years into seperate entities
-    -> perhaps make python script to do this + delete empty lines 
   - Add selection feature to pick a search result. cout wiki/imdb url to
       the selected movie.
   
@@ -12,6 +10,7 @@ Movie Search Engine Spec.
 
 /scripts:
   scraper.py -> scrapes wikipedia pages to obtain movie titles
+  fix_titles.py -> removes newlines, seperates titles with same year
 
 /data
   MovieTitles.txt -> list of all movie titles filled by webscraper

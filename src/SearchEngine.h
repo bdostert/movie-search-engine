@@ -27,7 +27,7 @@ class SearchEngine {
     SearchEngine(){
       std::ifstream file("../data/MovieTitles.txt");
 
-      movieTitles.reserve(50000); //approx number of titles
+      movieTitles.reserve(60000); //approx number of titles
 
       if(!file.is_open()){
         std::cout << "Error opening MovieTitles file. Run scraper.py." << std::endl;
@@ -39,15 +39,14 @@ class SearchEngine {
         if(line.empty())
           continue;
 
-  // This removes year information from titles, important for title with many
-    // years, like --> Asylum: (1972 horror, 1972 documentary, 1997, 2003, 2005 & 2008)
-        for(uint8_t i = 0; i < static_cast<uint8_t>(line.size()); ++i){
+  // This removes year information from titles, not sure if this is better
+/*        for(uint8_t i = 0; i < static_cast<uint8_t>(line.size()); ++i){
           if(i && line[i] == '(') {
             line.resize(i - 1);
             break;
           }
         }
-      
+*/      
         movieTitles.push_back(line);
       }
 
