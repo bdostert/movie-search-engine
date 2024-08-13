@@ -13,6 +13,8 @@ def main():
     file = open('../data/MovieTitles.txt', 'r')
     fixed_titles = []
 
+    split_years = input("Include years in movies? (y/n): ")
+
     for line in file:
         line_length = len(line)
         if line_length < 5:
@@ -25,10 +27,15 @@ def main():
          
         title = line[0: start_year_info - 2 if line[start_year_info - 2] == ':'
                                             else start_year_info - 1] 
+
         #find all years in year_info substring 
-        years = re.findall(r'\d{4}', line[start_year_info : line_length])
-        for year in years:
-            fixed_titles.append(title + " (" + year + ")")
+        if(split_years.lower() == 'y'):
+            years = re.findall(r'\d{4}', line[start_year_info : line_length])
+            for year in years:
+                fixed_titles.append(title + " (" + year + ")")
+        else:
+            if not fixed_titles or title != fixed_titles[-1]:
+                fixed_titles.append(title)
 
     file = open('../data/MovieTitles.txt', 'w')
     for title in fixed_titles:
