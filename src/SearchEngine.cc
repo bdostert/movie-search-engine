@@ -1,13 +1,39 @@
 #include "SearchEngine.h"
 
+void SearchEngine::createThreads(SearchEngine &searchEngine, std::vector<std::string> &mostSimilar, 
+                                 std::string &query){
+
+  uint16_t start = 0, end = 0;
+  std::vector<std::thread> threads; threads.reserve(threadCount); 
+
+  for(uint16_t i = 0; i < threadCount; ++i){
+    end = start + movieTitles.size() / threadCount;
+
+    threads.emplace_back(&SearchEngine::getMostSimilar, &searchEngine, std::ref(mostSimilar), std::ref(query), 
+                         start, end);
+
+    start = end;
+  }
+
+  for(auto &t : threads){
+    if(t.joinable())
+      t.join();
+  }
+
+  uint8_t pos = mostSimilar.size() - 1;
+  while(!pq.empty()){
+    mostSimilar[pos--] = movieTitles[pq.top().second];
+    pq.pop();
+  }
+}
 
 
 //compare query with all movieTitles using 
 void SearchEngine::getMostSimilar(std::vector<std::string> &mostSimilar, 
-                                  std::string &query){
+                                  std::string &query, uint16_t start, uint16_t end) {
 
-  uint16_t index = 0;
-  for(auto &title : movieTitles){
+  for(uint16_t index = start; index < end; ++index){
+    auto &title = movieTitles[index];
     uint8_t m = query.length(), n = title.length(), prev = 0;
     
     std::vector<uint8_t> curr(n + 1, 0);
@@ -39,13 +65,7 @@ void SearchEngine::getMostSimilar(std::vector<std::string> &mostSimilar,
           pq.emplace(curr[n], index);
         }
       } 
-      ++index;
 
-    }
-    uint8_t pos = mostSimilar.size() - 1;
-    while(!pq.empty()){
-      mostSimilar[pos--] = movieTitles[pq.top().second];
-      pq.pop();
     }
 
   }

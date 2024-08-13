@@ -23,6 +23,7 @@ Movie Search Engine Spec.
   SearchEngine.h
   TerminalDisplay.cc
   TerminalDisplay.h
+  BufferToggle.h -> allows linux terminal to use getchar without pressing enter
   main.cc 
   
   

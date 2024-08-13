@@ -35,7 +35,6 @@ void TerminalDisplay::update(){
       if(!query.empty()){
         query.pop_back();
         std::printf("\r\n");
-        //std::cout << "\r\n";
 
         if(query.empty()){
           for(uint8_t i = 0; i < mostSimilar.size(); ++i)
@@ -52,13 +51,12 @@ void TerminalDisplay::update(){
 
     if(static_cast<uint8_t>(query.length()) >= width - 5){
       std::printf("\nToo many input characters\n");
-      //std::cout << "Too many input characters" << std::endl;
       exit(1);
     }
 
     if(!query.empty())
-      searchEngine.getMostSimilar(mostSimilar, query);
-//    std::cout << "QUERY = " << query << "\n";
+      searchEngine.createThreads(searchEngine, mostSimilar, query);
+      //searchEngine.getMostSimilar(mostSimilar, query);
         
 
     for(uint8_t i = 0; i < height - 3; ++i){
@@ -72,18 +70,16 @@ void TerminalDisplay::update(){
       for(uint8_t j = 0; j < mostSimilar[i].size() && j < width - 1; ++j)
         buf[width * (i + 1) + 4 + j] = mostSimilar[i][j]; 
                                                                           
-      //std::memcpy(buf[width * (i + 1) + 2], mostSimilar[i], mostSimilar[i].length()); 
     }
     
 
-
+    // Output buffer
     printf("\x1b[H");
     for(int i = 0; i < height * width; ++i){
       putchar(i % width ? buf[i] : 10);
     }
     std::printf("\rSearch: %s", query.c_str());
-    //std::cout << "\rSearch: " << query;
 
-  }while(c != '~');
+  }while(c != '~'); //TODO add exit logic
     
 }

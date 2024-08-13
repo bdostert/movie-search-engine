@@ -8,6 +8,7 @@
 #include <vector>
 #include <cctype>
 #include <queue>
+#include <thread>
 
 struct pqLess {
   bool operator()(const std::pair<uint8_t, uint16_t> &a, const std::pair<uint8_t, uint16_t> &b){
@@ -17,11 +18,15 @@ struct pqLess {
 
 class SearchEngine {
   private:
+    const uint8_t threadCount = 8;
+
     std::vector<std::string> movieTitles;
 
     std::priority_queue< std::pair<uint8_t, uint16_t>, 
                          std::vector<std::pair<uint8_t, uint16_t>>, 
                          pqLess > pq;
+
+    void getMostSimilar(std::vector<std::string> &mostSimilar, std::string &query, uint16_t start, uint16_t end);
   
   public:
     SearchEngine(){
@@ -40,19 +45,20 @@ class SearchEngine {
           continue;
 
   // This removes year information from titles, not sure if this is better
-/*        for(uint8_t i = 0; i < static_cast<uint8_t>(line.size()); ++i){
+        for(uint8_t i = 0; i < static_cast<uint8_t>(line.size()); ++i){
           if(i && line[i] == '(') {
             line.resize(i - 1);
             break;
           }
         }
-*/      
+      
         movieTitles.push_back(line);
       }
 
     }
 
-    void getMostSimilar(std::vector<std::string> &mostSimilar, std::string &query);
+    void createThreads(SearchEngine &searchEngine, std::vector<std::string> &mostSimilar, std::string &query);
+
 
 };
 

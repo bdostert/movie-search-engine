@@ -1,6 +1,7 @@
 #ifndef MOVIESEARCHENGINE_BUFFERTOGGLE_H_
 #define MOVIESEARCHENGINE_BUFFERTOGGLE_H_
 
+//Idea stolen from -> https://cplusplus.com/forum/general/29137/
 
 #include <termios.h>
 #define STDIN_FILENO    0
