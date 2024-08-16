@@ -19,7 +19,7 @@ struct pqLess {
 
 class SearchEngine {
   private:
-    const uint8_t threadCount = 8;
+    uint8_t threadCount;
 
     std::vector<std::string> movieTitles;
 
@@ -37,6 +37,11 @@ class SearchEngine {
          //mutex is not copyable.
          mux = new std::mutex();
        } 
+
+    SearchEngine(uint16_t threads)
+      :threadCount(threads){
+        SearchEngine();
+      }
 
     SearchEngine(){
       std::ifstream file("../data/MovieTitles.txt");

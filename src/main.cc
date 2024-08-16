@@ -9,7 +9,7 @@ int main(int argc, char *argv[]){
   BufferToggle toggle;
   toggle.off();
 
-  SearchEngine searchEngine;
+  SearchEngine searchEngine(8);
   TerminalDisplay terminalDisplay(searchEngine);
 
   terminalDisplay.update(); 
