@@ -55,7 +55,7 @@ void TerminalDisplay::update(){
     }
 
     if(!query.empty())
-      searchEngine.createThreads(searchEngine, mostSimilar, query);
+      searchEngine.createThreads(mostSimilar, query);
       //searchEngine.getMostSimilar(mostSimilar, query);
         
 

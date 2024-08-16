@@ -1,7 +1,6 @@
 Movie Search Engine Spec.
 
 //TODO:
-  - Add multithreading to dynamic programming in search engine
   - Add clear line / backspace / quit options with menu above search results
   - Add selection feature to pick a search result. cout wiki/imdb url to
       the selected movie.

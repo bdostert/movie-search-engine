@@ -1,15 +1,13 @@
 #include "SearchEngine.h"
 
-void SearchEngine::createThreads(SearchEngine &searchEngine, std::vector<std::string> &mostSimilar, 
-                                 std::string &query){
-
+void SearchEngine::createThreads(std::vector<std::string> &mostSimilar, std::string &query){
   uint16_t start = 0, end = 0;
   std::vector<std::thread> threads; threads.reserve(threadCount); 
 
   for(uint16_t i = 0; i < threadCount; ++i){
     end = start + movieTitles.size() / threadCount;
 
-    threads.emplace_back(&SearchEngine::getMostSimilar, &searchEngine, std::ref(mostSimilar), std::ref(query), 
+    threads.emplace_back(&SearchEngine::getMostSimilar, this, std::ref(mostSimilar), std::ref(query), 
                          start, end);
 
     start = end;
@@ -54,6 +52,8 @@ void SearchEngine::getMostSimilar(std::vector<std::string> &mostSimilar,
         prev = temp;
       }
     }
+      mux->lock(); //lock mutex for pq updating
+//      std::lock_guard<std::mutex> guard(mux);
 
       if(pq.empty() || pq.size() < mostSimilar.size())
         pq.emplace(curr[n], index);
@@ -66,6 +66,7 @@ void SearchEngine::getMostSimilar(std::vector<std::string> &mostSimilar,
         }
       } 
 
-    }
+      mux->unlock();
 
+    }
   }
