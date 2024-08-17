@@ -36,7 +36,7 @@ int SearchEngine_tests::threadCount(){
     SearchEngine searchEngine(i);
     vector<string> mostSim(6);
 
-    string query = "american pie";
+    string query = "the hagnovre part ii";
     searchEngine.createThreads(mostSim, query);
     threadCountTimes.emplace_back(i, clock() - start);
   }
