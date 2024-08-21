@@ -16,8 +16,8 @@ class TerminalDisplay {
     
 
   public:
-    TerminalDisplay(SearchEngine &_searchEngine)
-      :searchEngine(_searchEngine){}
+    TerminalDisplay(SearchEngine &searchEngine)
+      :searchEngine(searchEngine){}
 
     void update();
 };

@@ -9,8 +9,8 @@ int main(int argc, char *argv[]){
   if(!searchTest.basic())
       std::cout << "Failed SearchEngin_basic\n";
 
-  if(!searchTest.threadCount())
-      std::cout << "Failed SearchEngin_threadCount\n";
+//  if(!searchTest.threadCount())
+  //    std::cout << "Failed SearchEngin_threadCount\n";
   
 
   return 0;

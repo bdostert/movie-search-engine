@@ -34,16 +34,15 @@ class SearchEngine {
     SearchEngine(const SearchEngine &obj)
       :threadCount(std::move(obj.threadCount)), movieTitles(std::move(obj.movieTitles)),
        pq(std::move(obj.pq)){
+
          //mutex is not copyable.
          mux = new std::mutex();
        } 
 
     SearchEngine(uint16_t threads)
       :threadCount(threads){
-        SearchEngine();
-      }
+       mux = new std::mutex(); 
 
-    SearchEngine(){
       std::ifstream file("../data/MovieTitles.txt");
 
 
@@ -71,6 +70,10 @@ class SearchEngine {
       }
 
     }
+  
+    ~SearchEngine(){
+      delete mux;
+    }  
 
     void createThreads(std::vector<std::string> &mostSimilar, std::string &query);
 

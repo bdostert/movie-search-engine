@@ -18,9 +18,14 @@ void SearchEngine::createThreads(std::vector<std::string> &mostSimilar, std::str
       t.join();
   }
 
+//  std::ofstream output;
+//  output.open("out.txt", std::ofstream::out | std::ios_base::app);
+ // output << "\nQUERY: " << query << "\n";
+  
   uint8_t pos = mostSimilar.size() - 1;
   while(!pq.empty()){
     mostSimilar[pos--] = movieTitles[pq.top().second];
+   // output << mostSimilar[pos] << "\n";
     pq.pop();
   }
 }
@@ -53,7 +58,6 @@ void SearchEngine::getMostSimilar(std::vector<std::string> &mostSimilar,
       }
     }
       mux->lock(); //lock mutex for pq updating
-//      std::lock_guard<std::mutex> guard(mux);
 
       if(pq.empty() || pq.size() < mostSimilar.size())
         pq.emplace(curr[n], index);
@@ -67,6 +71,5 @@ void SearchEngine::getMostSimilar(std::vector<std::string> &mostSimilar,
       } 
 
       mux->unlock();
-
     }
   }

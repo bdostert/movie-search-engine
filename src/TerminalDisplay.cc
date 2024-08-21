@@ -2,7 +2,7 @@
 
 void TerminalDisplay::update(){
 
-  char buf[9 * 50], c;
+  char buf[9 * 50], c = ' ';
   std::string line, query;
 
   std::memset(buf, ' ', height * width - 1);
@@ -56,7 +56,7 @@ void TerminalDisplay::update(){
 
     if(!query.empty())
       searchEngine.createThreads(mostSimilar, query);
-      //searchEngine.getMostSimilar(mostSimilar, query);
+   
         
 
     for(uint8_t i = 0; i < height - 3; ++i){
@@ -80,6 +80,6 @@ void TerminalDisplay::update(){
     }
     std::printf("\rSearch: %s", query.c_str());
 
-  }while(c != '~'); //TODO add exit logic
+  }while(c); //TODO add exit logic
     
 }

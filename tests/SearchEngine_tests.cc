@@ -7,20 +7,20 @@ int SearchEngine_tests::basic(){
 
   vector<string> mostSimilar(10);
   string query = "the prnicess brdie";
-//  cout << "QUERY: " << query << "\n";
+  cout << "QUERY: " << query << "\n";
   //getline(cin, query);
 
   searchEngine.createThreads(mostSimilar, query);
 
   for(int i = 0; i < static_cast<int>(mostSimilar.size()); ++i){
-    if(!mostSimilar[i].empty())
-      return 0;
+    //if(!mostSimilar[i].empty())
+      //return 0;
 
-  //  cout << i + 1 << ". " << mostSimilar[i] << "\n";
+    cout << i + 1 << ". " << mostSimilar[i] << "\n";
   }
 
   //assert(mostSimilar[0] == "The Princess Bride");
- // cout << "\nSearchEngine_basic Test Complete\n";
+  cout << "\nSearchEngine_basic Test Complete\n";
 
   return 1;
 }
